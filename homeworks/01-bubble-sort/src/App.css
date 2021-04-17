@@ -1,0 +1,9 @@
+.App {
+  height: 100vh;
+  text-align: center;
+  background-color: rgb(191, 226, 250);
+  color: #ffffff;
+  display: flex;
+  padding: 0 30%;
+  justify-content: center;
+}
