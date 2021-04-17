@@ -1,0 +1,18 @@
+.photo {
+    flex-grow: 1;
+    object-fit: cover;
+    margin: 0 2px 2px 0;
+}
+
+@media screen and (max-width: 400px) {
+    .photo {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 2560px) {
+    .photo {
+        max-height: 400px;
+    }
+}
+
