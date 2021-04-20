@@ -3,9 +3,7 @@ export type IntervalResult<T> = Readonly<{
     currentItemIndex: number;
 }>;
 
-type SortFuction<T,> = (sortingArray: Array<T>, ascOrder?: boolean) => IntervalResult<T>[];
-
-export const bubbleSort: SortFuction<number> = (items: number[], ascOrder = true) => {
+export const bubbleSort = (items: number[], ascOrder = true) => {
     const updatingArray: number[] = [...items];
     const results: IntervalResult<number>[] = [];
     const itemsCount = updatingArray.length;
@@ -21,7 +19,7 @@ export const bubbleSort: SortFuction<number> = (items: number[], ascOrder = true
             }
             const intervalArray = [...updatingArray];
             results.push({
-                currentItemIndex: k,
+                currentItemIndex: k + 1,
                 intervalArray
             });
         }

@@ -8,13 +8,11 @@ export type SortingItem = number;
 export type SortingArray = SortingItem[];
 
 export enum SortingStatus {
-    ON_START = 'Let\'s go!',
-    IN_PROGRESS = 'Sorting...',
-    ON_PAUSE = 'On Pause',
-    SOLVED = 'Completed!'
+    OnStart = 'Let\'s go!',
+    InProgress = 'Sorting...',
+    OnPause = 'On Pause',
+    Solved = 'Completed!'
 };
-
-type ChangeInputValue = (event: React.ChangeEvent<HTMLInputElement>) => void;
 
 interface BubbleSortMainState {
     arrayItems: SortingArray;
@@ -27,14 +25,14 @@ interface BubbleSortMainState {
 
 class BubbleSortMain extends React.Component<{}, BubbleSortMainState> {
 
-    private intervalId: NodeJS.Timeout;
+    private timeoutId: number;
     private sortedArrayByInterval: IntervalResult<SortingItem>[];
 
     state: BubbleSortMainState = {
         arrayItems: [],
         sortIterval: 100,
         isAscOrder: true,
-        status: SortingStatus.ON_START,
+        status: SortingStatus.OnStart,
         length: 10
     }
 
@@ -43,7 +41,7 @@ class BubbleSortMain extends React.Component<{}, BubbleSortMainState> {
     }
 
     componentWillUnmount() {
-        clearInterval(this.intervalId);
+        window.clearTimeout(this.timeoutId);
     }
 
     initGame = (): void => {
@@ -52,11 +50,11 @@ class BubbleSortMain extends React.Component<{}, BubbleSortMainState> {
         this.setState({ arrayItems: items });
     }
 
-    visialize = async (oneIterate = false): Promise<void> => {
-        if (this.state.status === SortingStatus.IN_PROGRESS && this.sortedArrayByInterval.length > 0) {
+    visialize = (oneIterate = false): void => {
+        if (this.state.status === SortingStatus.InProgress && this.sortedArrayByInterval.length > 0) {
             const currentInterval = this.sortedArrayByInterval[0];
             this.sortedArrayByInterval = this.sortedArrayByInterval.slice(1);
-            this.intervalId = await setTimeout(
+            this.timeoutId = window.setTimeout(
                 () => this.setState(
                     {arrayItems: currentInterval.intervalArray, currentItemIndex: currentInterval.currentItemIndex},
                     () => !oneIterate && this.visialize()
@@ -64,23 +62,23 @@ class BubbleSortMain extends React.Component<{}, BubbleSortMainState> {
                 this.state.sortIterval
             );
         } else if (this.sortedArrayByInterval.length === 0) {
-            this.setState({status: SortingStatus.SOLVED, currentItemIndex: undefined})
+            this.setState({status: SortingStatus.Solved, currentItemIndex: undefined})
         }
     }
 
     start = (): void => {
         this.sortedArrayByInterval = bubbleSort(this.state.arrayItems, this.state.isAscOrder);
         this.setState(
-            { status: SortingStatus.IN_PROGRESS },
+            { status: SortingStatus.InProgress },
             async () => await this.visialize()
         );
     }
 
     pause = (): void => {
         this.setState(
-            { status: this.state.status === SortingStatus.IN_PROGRESS ? SortingStatus.ON_PAUSE : SortingStatus.IN_PROGRESS },
+            { status: this.state.status === SortingStatus.InProgress ? SortingStatus.OnPause : SortingStatus.InProgress },
             async () => {
-                if (this.state.status === SortingStatus.IN_PROGRESS) {
+                if (this.state.status === SortingStatus.InProgress) {
                     await this.visialize();
                 }
             }
@@ -89,31 +87,31 @@ class BubbleSortMain extends React.Component<{}, BubbleSortMainState> {
 
     reset = (): void => {
         this.setState(
-            { currentItemIndex: undefined, status: SortingStatus.ON_START },
+            { currentItemIndex: undefined, status: SortingStatus.OnStart },
             () => this.initGame()
         );
     }
 
     iterate = (): void => {
         this.setState(
-            {status: SortingStatus.IN_PROGRESS},
+            {status: SortingStatus.InProgress},
             async () => await this.visialize(true)
         );
     }
 
-    changeSortOrder: ChangeInputValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+    changeSortOrder: React.ChangeEventHandler<HTMLInputElement> = (event) => {
         this.setState({
-            isAscOrder: !(event.target.type === 'checkbox' && event.target.checked)
+            isAscOrder: !event.target.checked
         });
     }
 
-    changeSortInterval: ChangeInputValue = (event: React.ChangeEvent<HTMLInputElement>) => {
+    changeSortInterval: React.ChangeEventHandler<HTMLInputElement> = (event) => {
         this.setState({
             sortIterval: +event.target.value
         });
     }
 
-    changeSortingArray: ChangeInputValue = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    changeSortingArray: React.ChangeEventHandler<HTMLInputElement> = (event): void => {
         this.setState({
             length: +event.target.value
         }, () => this.initGame());
@@ -145,8 +143,8 @@ class BubbleSortMain extends React.Component<{}, BubbleSortMainState> {
                         <input id='order'
                             type="checkbox"
                             checked={!this.state.isAscOrder}
-                            disabled={this.state.status === SortingStatus.IN_PROGRESS || this.state.status === SortingStatus.ON_PAUSE}
-                            onChange={(event) => this.changeSortOrder(event)}
+                            disabled={this.state.status === SortingStatus.InProgress || this.state.status === SortingStatus.OnPause}
+                            onChange={this.changeSortOrder}
                         />
                     </div>
 
@@ -156,8 +154,8 @@ class BubbleSortMain extends React.Component<{}, BubbleSortMainState> {
                             value={this.state.sortIterval}
                             type="range"
                             min="100" max="1000" step="100"
-                            disabled={this.state.status === SortingStatus.IN_PROGRESS}
-                            onChange={(event) => this.changeSortInterval(event)}
+                            disabled={this.state.status === SortingStatus.InProgress}
+                            onChange={this.changeSortInterval}
                         />
                     </div>
 
@@ -167,30 +165,30 @@ class BubbleSortMain extends React.Component<{}, BubbleSortMainState> {
                             type="range"
                             value={this.state.length}
                             min="5" max="100" step="5"
-                            disabled={this.state.status === SortingStatus.IN_PROGRESS || this.state.status === SortingStatus.ON_PAUSE}
-                            onChange={(event) => this.changeSortingArray(event)}
+                            disabled={this.state.status === SortingStatus.InProgress || this.state.status === SortingStatus.OnPause}
+                            onChange={this.changeSortingArray}
                         />
                     </div>
 
-                    <button onClick={() => this.start()}
-                        disabled={this.state.status !== SortingStatus.ON_START}
+                    <button onClick={this.start}
+                        disabled={this.state.status !== SortingStatus.OnStart}
                     >
                         Start
                     </button>
-                    <button onClick={() => this.reset()}
-                        disabled={this.state.status === SortingStatus.IN_PROGRESS}
+                    <button onClick={this.reset}
+                        disabled={this.state.status === SortingStatus.InProgress}
                     >
                         Reset
                     </button>
-                    <button onClick={() => this.iterate()}
-                        disabled={this.state.status === SortingStatus.SOLVED}
+                    <button onClick={this.iterate}
+                        disabled={this.state.status === SortingStatus.Solved}
                     >
                         Iterate
                     </button>
-                    <button onClick={() => this.pause()}
-                        disabled={this.state.status === SortingStatus.SOLVED || this.state.status === SortingStatus.ON_START}
+                    <button onClick={this.pause}
+                        disabled={this.state.status === SortingStatus.Solved || this.state.status === SortingStatus.OnStart}
                     >
-                        {this.state.status === SortingStatus.ON_PAUSE ? 'Resume' : 'Pause'}
+                        {this.state.status === SortingStatus.OnPause ? 'Resume' : 'Pause'}
                     </button>
                 </footer>
             </div>

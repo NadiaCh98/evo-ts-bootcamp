@@ -1,12 +1,12 @@
 type GenerateRandomNumber = (min: number, max: number) => number;
 
-export const generateRandomInteger: GenerateRandomNumber = (min: number, max: number): number => {
+export const generateRandomInteger: GenerateRandomNumber = (min, max): number => {
     const low = Math.ceil(min);
     const top = Math.floor(max);
     return Math.floor(Math.random() * (top - low) + low);
 }
 
-export const generateRandomIntegerInclusive: GenerateRandomNumber = (min: number, max: number) => {
+export const generateRandomIntegerInclusive: GenerateRandomNumber = (min, max) => {
     const low = Math.ceil(min);
     const top = Math.floor(max);
     return Math.floor(Math.random() * (top - low + 1) + low);
