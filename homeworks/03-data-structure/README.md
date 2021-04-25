@@ -3,4 +3,4 @@
 ## Tests Coverage
 
 ![Coverage Image]
-(./images/Coverage.PNG)
+(/images/Coverage.PNG)
