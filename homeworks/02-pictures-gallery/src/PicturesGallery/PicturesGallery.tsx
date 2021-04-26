@@ -21,6 +21,11 @@ const StyledPicturesGallery = styled.div`
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+
+    &::after {
+        content: "";
+        flex-grow: 9999;
+    }
 `;
 
 class PicturesGallery extends React.Component<{}, PictutesGalleryState> {
