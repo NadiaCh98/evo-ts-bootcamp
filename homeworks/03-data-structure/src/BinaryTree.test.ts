@@ -115,23 +115,6 @@ describe("Binary Tree Functionality", () => {
             binaryTree.setTree(testingTree);
             expect(binaryTree.traverse(TraverseType.BFS)).toEqual<number[]>([5, 10, 8, 11, 12, 15, 16]);
         });
-
-        // it("assets traverse with untreated parameter = error", () => {
-        //     const f = jest.fn();
-
-        //     const spy = {
-        //         ...binaryTree,
-        //         traverse: f.mockImplementation((type: TraverseType) => {
-        //             switch (type) {
-        //                 case TraverseType.BFS: return [1];
-        //                 case TraverseType.DFSInorder: return [1];
-        //                 case TraverseType.DFSPostorder: return [1];
-        //                 default: throw new Error(`Unexpected Arguments, ${type}`);
-        //             }
-        //         })
-        //     }
-        //     expect(() => spy.traverse(TraverseType.DFSPreorder)).toThrowError();
-        // });
     });
 
     describe("Get Column", () => {

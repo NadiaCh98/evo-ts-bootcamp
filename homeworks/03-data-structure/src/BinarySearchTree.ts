@@ -37,11 +37,11 @@ export class BinarySearchTree extends BinaryTree<number> implements BaseBinarySe
         return result;
     }
 
-    has(value: number): boolean {
+    public has(value: number): boolean {
         return this.findValue(value, this.tree);
     }
 
-    insertNode(value: number): void {
+    public insertNode(value: number): void {
         const newNode: TreeNode = {
             value,
             left: null,
@@ -74,7 +74,7 @@ export class BinarySearchTree extends BinaryTree<number> implements BaseBinarySe
         }
     }
 
-    setTree(tree: TreeNodeValue<number>): this {
+    public setTree(tree: TreeNodeValue<number>): this {
         if (!this.isBinarySearchTree(tree)) {
             throw new Error('The tree is not BST!');
         }

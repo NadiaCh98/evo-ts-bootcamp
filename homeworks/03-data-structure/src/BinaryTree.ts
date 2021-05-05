@@ -73,16 +73,16 @@ export class BinaryTree<T> implements BaseBinaryTree<T> {
         return columns;
     }
 
-    setTree(tree: TreeNode<T>): this {
+    public setTree(tree: TreeNode<T>): this {
         this.tree = tree;
         return this;    
     }
 
-    getTree(): TreeNodeValue<T> {
+    public getTree(): TreeNodeValue<T> {
         return this.tree;
     }
 
-    traverse(type: TraverseType): T[] {
+    public traverse(type: TraverseType): T[] {
         switch (type) {
             case TraverseType.DFSInorder:
                 return this.traverseDFSInorder(this.tree);
@@ -93,12 +93,10 @@ export class BinaryTree<T> implements BaseBinaryTree<T> {
             case TraverseType.BFS: {
                 return this.traverseBFS(this.tree);
             }
-            // default:
-            //     throw new Error(`Unexpected Argument, ${type}`);
         }
     }
 
-    getColumn(columnOrder: number): TreeNode<T>[] {
+    public getColumn(columnOrder: number): TreeNode<T>[] {
         const columns = this.getTreeNodesByColumnIndex(this.tree);
         return columns[columnOrder];
     }
