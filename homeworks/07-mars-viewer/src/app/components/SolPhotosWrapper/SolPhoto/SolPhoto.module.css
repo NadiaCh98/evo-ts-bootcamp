@@ -1,0 +1,33 @@
+.SolPhoto {
+    min-height: 100px;
+    position: relative;
+    display: flex;
+    flex-flow: column;
+}
+
+.SolPhoto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.SolPhoto p {
+    background: var(--background-color);
+    color: var(--paragraph-color);
+    text-align: center;
+    font-size: 0.8rem;
+    line-height: 1.2rem;
+}
+
+.SolPhoto svg {
+    width: 2rem;
+    position: absolute;
+    top: var(--grid-gap);
+    left: var(--grid-gap);
+    transition: width 0.5s;
+}
+
+.SolPhoto svg:hover {
+    cursor: pointer;
+    width: 3rem;
+}

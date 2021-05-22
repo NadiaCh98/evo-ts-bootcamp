@@ -1,0 +1,18 @@
+.SolPhotosWrapper,
+.SolPhotosWrapper__header {
+    display: grid;
+    grid-row-gap: var(--grid-gap);
+}
+
+.SolPhotosWrapper__header {
+    padding-top: var(--grid-gap);
+    justify-content: center;
+    text-align: center;
+}
+
+.SolPhotosWrapper__container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(var(--image-width), 1fr));
+    grid-gap: var(--grid-gap);
+}
