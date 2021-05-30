@@ -14,9 +14,9 @@ export class DirWatcher {
 
   constructor(private eventEmmiter: EventEmitter) {}
 
-  public watch({ dirpath, delay }: WatchParams) {
+  public watch({ dirpath, delay }: WatchParams): void {
     let count = 0;
-    const intervalId = setInterval(async () => {
+    setInterval(async () => {
       const files = await this.readDirectoryFiles(dirpath);
       !!count && this.checkForRemovedFiles(files);
       files.forEach(async (file) => {
@@ -24,7 +24,6 @@ export class DirWatcher {
       });
       count++;
     }, delay);
-    return intervalId;
   }
 
   private readDirectoryFiles(dirpath: string): Promise<string[]> {
