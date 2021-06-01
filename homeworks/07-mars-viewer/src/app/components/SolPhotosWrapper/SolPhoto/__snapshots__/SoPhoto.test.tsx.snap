@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SolPhoto Component has a correct template #1 1`] = `
+<div
+  class="SolPhoto"
+>
+  <svg>
+    fav.svg
+  </svg>
+  <img
+    alt="https://mars.nasa.gov/msl-raw-images/msss/00001/mhli/0001MH0000002000I1_DXXX.jpg"
+    src="https://mars.nasa.gov/msl-raw-images/msss/00001/mhli/0001MH0000002000I1_DXXX.jpg"
+  />
+  <p>
+    Nasa Photo
+  </p>
+</div>
+`;
