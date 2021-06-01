@@ -7,8 +7,9 @@ import {
   selectSolPhotos,
   selectSol,
   selectStatus,
+  selectIsShowStatus,
+  selecIsDisabledLoad,
 } from './solsSlice';
-import { SolsLoadStatus } from './solsLoadStatus';
 import { SelectIdHandler } from '../../models/callbackTypes';
 import { addToFavorites } from '../favorites/favoritesSlice';
 import { SolPhotosWrapper } from '../../../app/components/SolPhotosWrapper/SolPhotosWrapper';
@@ -19,6 +20,8 @@ const Sols = (): React.ReactElement => {
   const photos = useAppSelector(selectSolPhotos);
   const status = useAppSelector(selectStatus);
   const selectedSol = useAppSelector(selectSol);
+  const isShowStatus = useAppSelector(selectIsShowStatus);
+  const isDisabledLoad = useAppSelector(selecIsDisabledLoad);
 
   const changeCurrentSol = useCallback(
     (sol: number) => dispatch(changeSol(sol)),
@@ -42,8 +45,9 @@ const Sols = (): React.ReactElement => {
         sol={selectedSol}
         selectSol={changeCurrentSol}
         loadSol={loadSol}
+        disabledLoad={isDisabledLoad}
       />
-      {status !== SolsLoadStatus.Success && status}
+      {isShowStatus && status}
     </SolPhotosWrapper>
   );
 };

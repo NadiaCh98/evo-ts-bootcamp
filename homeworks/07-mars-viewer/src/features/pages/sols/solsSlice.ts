@@ -89,6 +89,20 @@ export const selectPhotos = (state: RootState): SolPhotoData[] =>
   state.solsPage.photos;
 export const selectSols = (state: RootState): SolData[] => state.solsPage.sols;
 
+export const selectIsShowStatus = createSelector(
+  selectStatus,
+  (status: SolsLoadStatus): boolean => status !== SolsLoadStatus.Success
+);
+
+export const selecIsDisabledLoad = createSelector(
+  selectStatus,
+  selectSol,
+  selectSols,
+  (status: SolsLoadStatus, currentSol: number, sols: SolData[]): boolean =>
+    status === SolsLoadStatus.Loading ||
+    !!sols.find((sol) => sol.solNumber === currentSol)
+);
+
 export const selectSolPhotos = createSelector(
   selectSol,
   selectPhotos,

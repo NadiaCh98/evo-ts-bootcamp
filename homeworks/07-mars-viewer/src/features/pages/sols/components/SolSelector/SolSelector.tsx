@@ -3,11 +3,12 @@ import styles from './SolSelector.module.css';
 
 interface SolSelectorProps {
   readonly sol: number;
+  readonly disabledLoad: boolean;
   readonly selectSol: (sol: number) => void;
   readonly loadSol: () => void;
 }
 
-const SolSelector = ({ sol, selectSol, loadSol }: SolSelectorProps) => {
+const SolSelector = ({ sol, disabledLoad, selectSol, loadSol }: SolSelectorProps) => {
   const changeSol = (event: React.ChangeEvent<HTMLInputElement>) => {
     selectSol(+event.target.value);
   };
@@ -20,7 +21,7 @@ const SolSelector = ({ sol, selectSol, loadSol }: SolSelectorProps) => {
         type="number"
         onChange={changeSol}
       />
-      <button onClick={loadSol}>Load</button>
+      <button onClick={loadSol} disabled={disabledLoad}>Load</button>
     </div>
   );
 };
