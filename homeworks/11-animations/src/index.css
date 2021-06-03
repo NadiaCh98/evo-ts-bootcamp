@@ -1,0 +1,112 @@
+:root {
+    --animation-duration: 4s;
+}
+
+body {
+  margin: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+circle,
+path {
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+#inner1 {
+  animation: inner1 var(--animation-duration) linear infinite;
+}
+
+#inner2 {
+  animation: inner2 var(--animation-duration) ease-in infinite;
+}
+
+#inner3 {
+  animation: inner3 var(--animation-duration) ease-in infinite;
+}
+
+@keyframes inner3 {
+  0% {
+    stroke-dasharray: 80,1100;
+    transform: rotate(0deg);
+  }
+  50% {
+    stroke-dasharray: 20,1100;
+  }
+  100% {
+    stroke-dasharray: 80,1100;
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes inner2 {
+  0% {
+    stroke-dasharray: 80,1100;
+    transform: rotate(0deg); 
+  }
+  100% {
+    stroke-dasharray: 1100,0;
+    transform: rotate(360deg); 
+  }
+}
+
+@keyframes inner1 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+#hexs path {
+  animation-name: hexagon;
+  animation-iteration-count: infinite;
+  animation-duration: var(--animation-duration);
+  opacity: 0;
+}
+
+#hex0 {
+  animation-delay: 0s;
+}
+
+#hex1 {
+  animation-delay: 0.2s;
+}
+
+#hex2 {
+  animation-delay: 0.4s;
+}
+#hex3 {
+  animation-delay: 0.6s;
+}
+#hex4 {
+  animation-delay: 0.8s;
+}
+#hex5 {
+  animation-delay: 1s;
+}
+#hex6 {
+  animation-delay: 1.2s;
+}
+
+@keyframes hexagon {
+  0%,
+  30% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  50%,
+  70% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+}
