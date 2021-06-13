@@ -1,0 +1,6 @@
+.SolSelector {
+  width: min-content;
+  display: grid;
+  grid-auto-flow: column;
+  grid-column-gap: var(--grid-gap);
+}

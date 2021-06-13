@@ -1,0 +1,32 @@
+.Navbar {
+    width: 100%;
+    height: 56px;
+    display: flex;
+    background: var(--background-color);
+    justify-content: center;
+    align-items: center;
+}
+
+.Navbar ul {
+    list-style-type: none;
+    display: flex;
+}
+
+.Navbar li {
+    margin: 0 8px;
+}
+
+.Navbar a {
+    color: var(--paragraph-color);
+    font-size: 1.5em;
+    text-decoration: none;
+}
+
+.Navbar a:hover {
+    color: var(--title-hover-color);
+}
+
+.Navbar a.active {
+    color: var(--title-color);
+    font-weight: 600;
+}
