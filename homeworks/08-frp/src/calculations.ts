@@ -29,6 +29,14 @@ export const isNeighbours = (
   return Math.abs(position1[character] - position2[character]) <= compareValue;
 };
 
+const isValidPosition = (currentPosition: Point, positions: Point[]): boolean => {
+  return positions.some(
+    (position) =>
+      isNeighbours(position, currentPosition, "x") &&
+      isNeighbours(position, currentPosition, "y")
+  );
+}
+
 export const getWindowsPositions = (windowsCount: number): Point[] => {
   const positions: Point[] = [];
   for (let i = 0; i < windowsCount; i++) {
@@ -39,12 +47,8 @@ export const getWindowsPositions = (windowsCount: number): Point[] => {
         CANVAS_HEIGHT,
         WINDOW_SIZE
       );
-      const hasHeighbour = positions.find(
-        (position) =>
-          isNeighbours(position, currentPosition, "x") &&
-          isNeighbours(position, currentPosition, "y")
-      );
-      if (!hasHeighbour) {
+      const hasNeighbour = isValidPosition(currentPosition, positions);
+      if (!hasNeighbour) {
         positions.push(currentPosition);
         isInvalid = false;
       }

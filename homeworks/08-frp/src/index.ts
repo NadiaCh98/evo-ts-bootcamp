@@ -6,8 +6,9 @@ import {
   getWindowsPositions,
   isNeighbours,
 } from "./calculations";
-import { fromEvent, interval } from "rxjs";
+import { fromEvent, interval, of } from "rxjs";
 import {
+  concatMap,
   filter,
   map,
   scan,
@@ -44,14 +45,30 @@ const main = () => {
       const positionIndex = getRandomInteger(1, windowsCount);
       return positions[positionIndex];
     }),
-    scan((acc, position) => {
-      gameCanvas.clearImage(acc);
-      if (acc === position) {
-        position = acc !== defaultPosition ? defaultPosition : positions[1];
-      }
-      gameCanvas.drawImage(position);
-      return position;
-    }, defaultPosition)
+    scan(
+      (acc, position) => {
+        const oldPosition = acc[acc.length - 1];
+        if (oldPosition === position) {
+          position =
+            oldPosition !== defaultPosition ? defaultPosition : positions[1];
+        }
+        return [...acc, position];
+      },
+      [defaultPosition]
+    ),
+    concatMap((positions) => {
+      const lastIndex = positions.length - 1;
+      const currentPosition = positions[lastIndex];
+      const previousPosition = positions[lastIndex - 1];
+      
+      return of([previousPosition, currentPosition]).pipe(
+        tap(([previous, current]) => {
+          gameCanvas.clearImage(previous);
+          gameCanvas.drawImage(current);
+        }),
+        map(([_, current]) => current)
+      );
+    })
   );
 
   const game$ = player$.pipe(
