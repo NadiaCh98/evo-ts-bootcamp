@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "types": ["node", "commander"]
+  },
+  "include": ["caesar-cli.ts", "src"]
+}
